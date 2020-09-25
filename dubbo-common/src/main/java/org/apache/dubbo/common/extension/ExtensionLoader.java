@@ -615,7 +615,8 @@ public class ExtensionLoader<T> {
                 EXTENSION_INSTANCES.putIfAbsent(clazz, clazz.newInstance());
                 instance = (T) EXTENSION_INSTANCES.get(clazz);
             }
-            injectExtension(instance);  // 实现注入 类似spring的IOC 、AOP
+            injectExtension(instance);  // 实现注入 类似spring的IOC 、AOP 通过set方法注入
+            // @Adaptive注解且具有含有Protocol的单参构造器，符合这样条件的会被列入AOP增强类
             Set<Class<?>> wrapperClasses = cachedWrapperClasses;
             if (CollectionUtils.isNotEmpty(wrapperClasses)) {
                 for (Class<?> wrapperClass : wrapperClasses) {
@@ -1015,6 +1016,8 @@ public class ExtensionLoader<T> {
         ClassLoader classLoader = findClassLoader();
         org.apache.dubbo.common.compiler.Compiler compiler = ExtensionLoader.getExtensionLoader(org.apache.dubbo.common.compiler.Compiler.class).getAdaptiveExtension();
        // 编译生成的类
+       // 构建实例对象，并实现aop
+        // 实现类 AdaptiveCompiler
         return compiler.compile(code, classLoader);
     }
 
