@@ -58,7 +58,7 @@ public abstract class AbstractLoadBalance implements LoadBalance {
         if (invokers.size() == 1) {
             return invokers.get(0);
         }
-        return doSelect(invokers, url, invocation);
+        return doSelect(invokers, url, invocation); // RandomLoadBalance.doSelect
     }
 
     protected abstract <T> Invoker<T> doSelect(List<Invoker<T>> invokers, URL url, Invocation invocation);

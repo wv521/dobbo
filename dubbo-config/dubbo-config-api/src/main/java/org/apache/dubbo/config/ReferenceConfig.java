@@ -309,7 +309,7 @@ public class ReferenceConfig<T> extends ReferenceConfigBase<T> {
                 }
             } else { // assemble URL from register center's configuration
                 // if protocols not injvm checkRegistry
-                if (!LOCAL_PROTOCOL.equalsIgnoreCase(getProtocol())) {
+                if (!LOCAL_PROTOCOL.equalsIgnoreCase(getProtocol())) { // 不是injvm协议
                     checkRegistry(); // 校验注册中心
                     // 获取注册中心配置信息 registry://127.0.0.1:2181/org.apache.dubbo.registry.RegistryService?application=dubbo-demo-api-consumer&dubbo=2.0.2&pid=8344&registry=zookeeper&timestamp=1593509973957
                     List<URL> us = ConfigValidationUtils.loadRegistries(this, false);

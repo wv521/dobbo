@@ -40,8 +40,8 @@ public class InvokerInvocationHandler implements InvocationHandler {
         if (method.getDeclaringClass() == Object.class) {
             return method.invoke(invoker, args);
         }
-        String methodName = method.getName();
-        Class<?>[] parameterTypes = method.getParameterTypes();
+        String methodName = method.getName(); // 方法名
+        Class<?>[] parameterTypes = method.getParameterTypes(); // 方法返回值
         if (parameterTypes.length == 0) {
             if ("toString".equals(methodName)) {
                 return invoker.toString();
@@ -54,8 +54,8 @@ public class InvokerInvocationHandler implements InvocationHandler {
         } else if (parameterTypes.length == 1 && "equals".equals(methodName)) {
             return invoker.equals(args[0]);
         }
-        RpcInvocation rpcInvocation = new RpcInvocation(method, invoker.getInterface().getName(), args);
-        rpcInvocation.setTargetServiceUniqueName(invoker.getUrl().getServiceKey());
+        RpcInvocation rpcInvocation = new RpcInvocation(method, invoker.getInterface().getName(), args); // 构建一个RpcInvocation对象
+        rpcInvocation.setTargetServiceUniqueName(invoker.getUrl().getServiceKey()); // 参数：org.apache.dubbo.demo.DemoService
         // invoker方法实现处理类：MockClusterInvoker
         return invoker.invoke(rpcInvocation).recreate();
     }

@@ -92,7 +92,7 @@ public class MockInvokersSelector extends AbstractRouter {
     private <T> boolean hasMockProviders(final List<Invoker<T>> invokers) {
         boolean hasMockProvider = false;
         for (Invoker<T> invoker : invokers) {
-            if (invoker.getUrl().getProtocol().equals(MOCK_PROTOCOL)) {
+            if (invoker.getUrl().getProtocol().equals(MOCK_PROTOCOL)) { // url:dubbo://192.168.159.1:20880/org.apache.dubbo.demo.DemoService?anyhost=true&application=dubbo-demo-api-consumer&check=false&deprecated=false&dubbo=2.0.2&dynamic=true&generic=false&interface=org.apache.dubbo.demo.DemoService&methods=sayHello,sayHelloAsync&pid=10560&register.ip=192.168.159.1&release=&remote.application=dubbo-demo-api-provider&side=consumer&sticky=false&timestamp=1609916602043
                 hasMockProvider = true;
                 break;
             }

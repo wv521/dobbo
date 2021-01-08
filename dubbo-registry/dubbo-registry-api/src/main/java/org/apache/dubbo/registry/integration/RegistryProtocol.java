@@ -429,7 +429,7 @@ public class RegistryProtocol implements Protocol {
         Map<String, String> parameters = new HashMap<String, String>(directory.getUrl().getParameters());
         // 构建一个消费者连接
         URL subscribeUrl = new URL(CONSUMER_PROTOCOL, parameters.remove(REGISTER_IP_KEY), 0, type.getName(), parameters);
-        if (!ANY_VALUE.equals(url.getServiceInterface()) && url.getParameter(REGISTER_KEY, true)) {
+        if (!ANY_VALUE.equals(url.getServiceInterface()) && url.getParameter(REGISTER_KEY, true)) { //url.getServiceInterface() : org.apache.dubbo.registry.RegistryService
             directory.setRegisteredConsumerUrl(getRegisteredConsumerUrl(subscribeUrl, url));
             // 实现类：org.apache.dubbo.registry.support.FailbackRegistry
             // 在注册中心创建 consumer节点，过程和服务提供者注册接节点一样

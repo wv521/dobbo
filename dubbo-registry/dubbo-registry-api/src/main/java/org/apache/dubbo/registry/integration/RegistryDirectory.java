@@ -594,7 +594,7 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
             return this.invokers == null ? Collections.emptyList() : this.invokers;
         }
 
-        List<Invoker<T>> invokers = null;
+        List<Invoker<T>> invokers = null;// 经过路由过后的服务
         try {
             // Get invokers from cache, only runtime routers will be executed.
             //路由

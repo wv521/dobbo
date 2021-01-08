@@ -47,7 +47,7 @@ public class FutureFilter implements Filter, Filter.Listener2 {
         fireInvokeCallback(invoker, invocation);
         // need to configure if there's return value before the invocation in order to help invoker to judge if it's
         // necessary to return future.
-        return invoker.invoke(invocation);
+        return invoker.invoke(invocation); // org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper.buildInvokerChain invoke
     }
 
     @Override

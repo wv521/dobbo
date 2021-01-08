@@ -33,9 +33,11 @@ import java.util.stream.Collectors;
 public class RouterChain<T> {
 
     // full list of addresses from registry, classified by method name.
+    // 所有服务地址列表
     private List<Invoker<T>> invokers = Collections.emptyList();
 
     // containing all routers, reconstruct every time 'route://' urls change.
+    // 配置的所有的路由规则（在dubbo的管理界面中配置）
     private volatile List<Router> routers = Collections.emptyList();
 
     // Fixed router instances: ConfigConditionRouter, TagRouter, e.g., the rule for each instance may change but the
@@ -93,10 +95,11 @@ public class RouterChain<T> {
      * @param invocation
      * @return
      */
-    public List<Invoker<T>> route(URL url, Invocation invocation) {
+    public List<Invoker<T>> route(URL url, Invocation invocation) { // invocation ：RpcInvocation [methodName=sayHello, parameterTypes=[class java.lang.String], arguments=[dubbo], attachments={}]
         List<Invoker<T>> finalInvokers = invokers;
         for (Router router : routers) {
-            finalInvokers = router.route(finalInvokers, url, invocation);
+            // 根据路由规则依次过滤不服务条件的服务
+            finalInvokers = router.route(finalInvokers, url, invocation); // MockInvokersSelector.route()
         }
         return finalInvokers;
     }

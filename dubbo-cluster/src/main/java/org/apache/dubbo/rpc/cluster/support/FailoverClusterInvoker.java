@@ -55,7 +55,7 @@ public class FailoverClusterInvoker<T> extends AbstractClusterInvoker<T> {
     @Override
     @SuppressWarnings({"unchecked", "rawtypes"})
     public Result doInvoke(Invocation invocation, final List<Invoker<T>> invokers, LoadBalance loadbalance) throws RpcException {
-        List<Invoker<T>> copyInvokers = invokers;
+        List<Invoker<T>> copyInvokers = invokers; // 复制一个副本，避免原集合被改变
         checkInvokers(copyInvokers, invocation);
         String methodName = RpcUtils.getMethodName(invocation);
         int len = getUrl().getMethodParameter(methodName, RETRIES_KEY, DEFAULT_RETRIES) + 1;
@@ -82,7 +82,7 @@ public class FailoverClusterInvoker<T> extends AbstractClusterInvoker<T> {
             try {
                 // 调用实例的方法，处理包装的filter
                 // AbstractInvoker---->最终实现处理类DubboInvoker
-                Result result = invoker.invoke(invocation);
+                Result result = invoker.invoke(invocation); // InvokerWrapper.invoke()
                 if (le != null && logger.isWarnEnabled()) {
                     logger.warn("Although retry the method " + methodName
                             + " in the service " + getInterface().getName()

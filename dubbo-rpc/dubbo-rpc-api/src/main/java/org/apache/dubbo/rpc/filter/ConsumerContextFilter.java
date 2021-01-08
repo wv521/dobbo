@@ -52,7 +52,7 @@ public class ConsumerContextFilter implements Filter {
         if (invocation instanceof RpcInvocation) {
             ((RpcInvocation) invocation).setInvoker(invoker);
         }
-        return invoker.invoke(invocation);
+        return invoker.invoke(invocation); // org.apache.dubbo.rpc.protocol.ProtocolFilterWrapper.buildInvokerChain  invoke
     }
 
 }

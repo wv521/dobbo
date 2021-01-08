@@ -51,9 +51,10 @@ public class ProtocolFilterWrapper implements Protocol {
 
     private static <T> Invoker<T> buildInvokerChain(final Invoker<T> invoker, String key, String group) {
         Invoker<T> last = invoker;
+
         List<Filter> filters = ExtensionLoader.getExtensionLoader(Filter.class).getActivateExtension(invoker.getUrl(), key, group);
 
-        if (!filters.isEmpty()) {
+        if (!filters.isEmpty()) { // 依次执行所有的Filter
             for (int i = filters.size() - 1; i >= 0; i--) {
                 final Filter filter = filters.get(i);
                 final Invoker<T> next = last;
@@ -78,7 +79,8 @@ public class ProtocolFilterWrapper implements Protocol {
                     public Result invoke(Invocation invocation) throws RpcException {
                         Result asyncResult;
                         try {
-                            asyncResult = filter.invoke(next, invocation);
+                            // 依次
+                            asyncResult = filter.invoke(next, invocation); // org.apache.dubbo.rpc.filter.ConsumerContextFilter.invoke  //2.org.apache.dubbo.rpc.protocol.dubbo.filter.FutureFilter.invoke //3.org.apache.dubbo.monitor.support.MonitorFilter.invoke
                         } catch (Exception e) {
                             if (filter instanceof ListenableFilter) {// Deprecated!
                                 Filter.Listener listener = ((ListenableFilter) filter).listener();

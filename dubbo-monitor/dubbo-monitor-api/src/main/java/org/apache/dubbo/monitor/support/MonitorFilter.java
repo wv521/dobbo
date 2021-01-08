@@ -86,7 +86,7 @@ public class MonitorFilter implements Filter, Filter.Listener2 {
             invocation.setAttachment(MONITOR_FILTER_START_TIME, String.valueOf(System.currentTimeMillis()));
             getConcurrent(invoker, invocation).incrementAndGet(); // count up
         }
-        return invoker.invoke(invocation); // proceed invocation chain
+        return invoker.invoke(invocation); // proceed invocation chain // 2.org.apache.dubbo.rpc.listener.ListenerInvokerWrapper.invoke
     }
 
     // concurrent counter

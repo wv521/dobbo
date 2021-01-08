@@ -163,7 +163,8 @@ public abstract class AbstractClusterInvoker<T> implements Invoker<T> {
         if (invokers.size() == 1) {
             return invokers.get(0);
         }
-        Invoker<T> invoker = loadbalance.select(invokers, getUrl(), invocation);
+        // 通过负载均衡策略选取一个服务。有配置权重数根据权重选取服务，没有配置按照均匀随机选取。
+        Invoker<T> invoker = loadbalance.select(invokers, getUrl(), invocation); // AbstractLoadBalance.select
 
         //If the `invoker` is in the  `selected` or invoker is unavailable && availablecheck is true, reselect.
         if ((selected != null && selected.contains(invoker))
@@ -241,7 +242,7 @@ public abstract class AbstractClusterInvoker<T> implements Invoker<T> {
 
     @Override
     public Result invoke(final Invocation invocation) throws RpcException {
-        checkWhetherDestroyed();
+        checkWhetherDestroyed(); // 校验
 
         // binding attachments into invocation.
         Map<String, Object> contextAttachments = RpcContext.getContext().getAttachments();
@@ -249,7 +250,7 @@ public abstract class AbstractClusterInvoker<T> implements Invoker<T> {
             ((RpcInvocation) invocation).addAttachments(contextAttachments);
         }
 
-        // 根据设定的路由规则来获取所有相同的服务列表。invocation：需要调用接口服务
+        // 根据route(路由)规则过滤到不符合条件的服务
         List<Invoker<T>> invokers = list(invocation);
         // 初始化一个负载均衡策略，默认采用的是随机random 策略
         LoadBalance loadbalance = initLoadBalance(invokers, invocation);
@@ -287,7 +288,7 @@ public abstract class AbstractClusterInvoker<T> implements Invoker<T> {
                                        LoadBalance loadbalance) throws RpcException;
 
     protected List<Invoker<T>> list(Invocation invocation) throws RpcException {
-        return directory.list(invocation);
+        return directory.list(invocation);// AbstractDirectory.list
     }
 
     /**

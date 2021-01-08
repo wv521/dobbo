@@ -75,7 +75,7 @@ public class ListenerInvokerWrapper<T> implements Invoker<T> {
 
     @Override
     public Result invoke(Invocation invocation) throws RpcException {
-        return invoker.invoke(invocation);
+        return invoker.invoke(invocation); // org.apache.dubbo.rpc.protocol.AsyncToSyncInvoker.invoke
     }
 
     @Override

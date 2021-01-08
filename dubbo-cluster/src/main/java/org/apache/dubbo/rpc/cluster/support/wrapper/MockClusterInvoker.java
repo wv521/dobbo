@@ -72,9 +72,9 @@ public class MockClusterInvoker<T> implements Invoker<T> {
     public Result invoke(Invocation invocation) throws RpcException {
         Result result = null;
 
-        // 获取服务降级
+        // 获取服务降级配置标识
         String value = directory.getUrl().getMethodParameter(invocation.getMethodName(), MOCK_KEY, Boolean.FALSE.toString()).trim();
-        if (value.length() == 0 || "false".equalsIgnoreCase(value)) {
+        if (value.length() == 0 || "false".equalsIgnoreCase(value)) { // 服务降级的配置在dubbo管理界面中配置
             //no mock  没有配置服务降级措施，直接调用服务的invoker的方法  实现处理类：AbstractClusterInvoker
             result = this.invoker.invoke(invocation);
         } else if (value.startsWith("force")) {

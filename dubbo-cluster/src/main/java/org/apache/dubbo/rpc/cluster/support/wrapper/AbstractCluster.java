@@ -88,8 +88,8 @@ public abstract class AbstractCluster implements Cluster {
         public Result invoke(Invocation invocation) throws RpcException {
             Result asyncResult;
             try {
-                interceptor.before(next, invocation);
-                asyncResult = interceptor.intercept(next, invocation);
+                interceptor.before(next, invocation); // 调用前操作
+                asyncResult = interceptor.intercept(next, invocation); // 调用
             } catch (Exception e) {
                 // onError callback
                 if (interceptor instanceof ClusterInterceptor.Listener) {
@@ -98,7 +98,7 @@ public abstract class AbstractCluster implements Cluster {
                 }
                 throw e;
             } finally {
-                interceptor.after(next, invocation);
+                interceptor.after(next, invocation); // 调用后操作
             }
             return asyncResult.whenCompleteWithContext((r, t) -> {
                 // onResponse callback
